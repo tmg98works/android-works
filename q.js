@@ -160,4 +160,85 @@ function check(num){
 		str = str.replace(/gt;/g,'');
 		str = str.replace(/nbsp;/g,'');			
 		return str.replace(/<("[^"]*"|'[^']*'|[^'">])*>/gi,'');
-	}		
+	}	
+	
+	
+	window.onload = function() {
+	 
+		
+		  var topbar = $("#top-bar").offset().top - $("#header_bar").height();
+		  // 画面がスクロールされたら以下の処理を実行
+		  $(window).scroll(function() {		   
+		    if($(window).scrollTop() > topbar) {
+		      //var left = $("#wrap").offset().left;
+		      var w = $(window).width();
+		      var topHeight = w <= 1010 ? 60 : 96;
+		      $("#top-bar").css({"position": "fixed", "top": topHeight + "px","z-index" : "999"});
+		      /*$("#header-fixed").css({"position": "fixed", "left": left + "px","z-index" : "999"}); */
+		      $("#header-fixed").css({"position": "fixed","z-index" : "999"}); 
+		   
+
+		      var height = $("#header-fixed").height() + $("#top-bar").height();
+		      $(".entry").css({"position": "relative", "top": height + "px"});
+		      // var fheight = $(".entry").height();
+		      $("#footer").css({"position": "relative", "top": height});
+		    
+		  
+		    } else {
+		      $("#top-bar").css("position", "static");
+		      $("#header-fixed").css({"position" : "static"});		      
+		      $(".entry").css({"position": "relative", "top": 0});
+		      var height = $("#header-fixed").height() + $("#top-bar").height();
+		      $("#footer").css({"position": "relative", "top": height});
+		    
+		    }
+		     
+		    
+		  });
+
+
+				$(function(){
+				        var tag = "img";		
+						var tag_n = $('#downloadBan').val();	
+						if(tag_n !=undefined && tag_n!=""){
+							tag = tag_n;
+						}
+						//スマートフォンの設定
+						//タッチを禁止
+						var isTouch = ('ontouchstart' in window);
+						if(isTouch){
+							$(tag).bind({			
+								'touchstart': function(e) {
+									return false;						
+								},
+								'touchmove': function(e) {			
+									return false;		
+								},
+								'touchend': function(e) {
+									return false;				
+								}
+							});
+						}		
+						//PCサイトの設定
+					    //右クリック禁止（ページ全体に設定）	  
+					    $('img').on('contextmenu',function(e){
+					    	return false; 
+					    }); 		
+						//ドラッグ防止
+						
+						$(tag).mouseup(function(e){
+							e.preventDefault();
+					    });
+						$(tag).mousedown(function(e){
+							e.preventDefault();
+					    });
+				
+					});		
+
+	
+	
+		function scrollToTop(id){	    
+		   var divOffset= $('#' + id).offset().top;	
+		    $('html,body').animate({scrollTop: divOffset + 'px'}, "swing");		   
+		}
+	}
